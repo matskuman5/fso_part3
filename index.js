@@ -1,3 +1,4 @@
+const { response } = require('express')
 const express = require('express')
 const app = express()
 
@@ -26,6 +27,16 @@ app.get('/', (req, res) => {
 app.get('/api/persons', (req, res) => {
   console.log(persons)
   res.json(persons)
+})
+
+app.get('/api/persons/:id', (req, res) => {
+    const id = Number(req.params.id)
+    console.log(id)
+    const person = persons.find(p => p.id === id)
+
+    person
+      ? res.json(person)
+      : res.status(404).end()
 })
 
 app.get('/info', (req, res) => {
