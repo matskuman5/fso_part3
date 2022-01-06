@@ -80,7 +80,7 @@ app.post('/api/persons', (req, res) => {
 
     if (persons.find(p => p.name === person.name)) {
         return res.status(400).json({
-            reror: 'name already in phonebook'
+            error: 'name already in phonebook'
         })
     }
 
