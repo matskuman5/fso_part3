@@ -85,15 +85,22 @@ app.post('/api/persons', (req, res) => {
         })
     }
 
-    if (persons.find(p => p.name === person.name)) {
+    /* if (persons.find(p => p.name === person.name)) {
         return res.status(400).json({
             error: 'name already in phonebook'
         })
-    }
+    } */
 
-    person.id = Math.floor(Math.random() * 10000)
-    persons = persons.concat(person)
-    res.json(person)
+    const person_db = new Person({
+      name: person.name,
+      number: person.number,
+      id: Math.floor(Math.random() * 10000)
+    })
+
+    person_db.save().then(savedPerson => {
+      console.log(`added ${person.name} number ${person.number} to phonebook`)
+      res.json(savedPerson)
+    })
 })
 
 app.get('/info', (req, res) => {

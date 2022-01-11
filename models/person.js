@@ -14,7 +14,8 @@ mongoose.connect(url)
 
 const personSchema = new mongoose.Schema({
     name: String,
-    number: String
+    number: String,
+    id: Number
 })
 
 module.exports = mongoose.model('Person', personSchema)
