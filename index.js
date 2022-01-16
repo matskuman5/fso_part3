@@ -103,6 +103,20 @@ app.post('/api/persons', (req, res) => {
     })
 })
 
+app.put('/api/persons/:id', (req, res, next) => {
+
+  const person = {
+    name: req.body.name,
+    number: req.body.number
+  }
+
+  Person.findByIdAndUpdate(req.params.id, person, { new: true })
+    .then(p => {
+      res.json(p)
+    })
+    .catch(error => next(error))
+})
+
 app.get('/info', (req, res) => {
   res.send(`Phonebook contains info for ${persons.length} people. Time: ${new Date()}`)
 })
