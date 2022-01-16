@@ -63,7 +63,9 @@ app.get('/api/persons', (req, res) => {
 
 app.get('/api/persons/:id', (req, res, next) => {
     Person.findById(req.params.id).then(p => {
-      res.json(p)
+      p
+      ? res.json(p)
+      : res.status(404).end()
     })
     .catch(error => next(error))
 })
