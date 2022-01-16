@@ -94,7 +94,6 @@ app.post('/api/persons', (req, res) => {
     const person_db = new Person({
       name: person.name,
       number: person.number,
-      id: Math.floor(Math.random() * 10000)
     })
 
     person_db.save().then(savedPerson => {
