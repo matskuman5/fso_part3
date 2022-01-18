@@ -80,12 +80,6 @@ app.delete('/api/persons/:id', (req, res, next) => {
 app.post('/api/persons', (req, res, next) => {
     const person = req.body
 
-    if (!person.name || !person.number) {
-        return res.status(400).json({
-            error: 'missing name or number'
-        })
-    }
-
     /* if (persons.find(p => p.name === person.name)) {
         return res.status(400).json({
             error: 'name already in phonebook'
