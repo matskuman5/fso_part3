@@ -61,12 +61,6 @@ app.delete('/api/persons/:id', (req, res, next) => {
 app.post('/api/persons', (req, res, next) => {
   const person = req.body
 
-  /* if (persons.find(p => p.name === person.name)) {
-        return res.status(400).json({
-            error: 'name already in phonebook'
-        })
-    } */
-
   const person_db = new Person({
     name: person.name,
     number: person.number,
