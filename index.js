@@ -1,5 +1,4 @@
 require('dotenv').config()
-const { response } = require('express')
 const express = require('express')
 const morgan = require('morgan')
 const cors = require('cors')
@@ -33,24 +32,6 @@ app.use(morgan(
   }
 ))
 
-let persons = [
-  {
-      id: 1,
-      name: 'abc',
-      number: '123',
-  },
-  {
-      id: 2,
-      name: 'xyz',
-      number: '45678'
-  },
-  {
-      id: 3,
-      name: 'fwfwfeafe',
-      number: '513414'
-  }
-]
-
 app.get('/', (req, res) => {
   res.send('<h1>Test</h1>')
 })
@@ -62,39 +43,39 @@ app.get('/api/persons', (req, res) => {
 })
 
 app.get('/api/persons/:id', (req, res, next) => {
-    Person.findById(req.params.id).then(p => {
-      p
+  Person.findById(req.params.id).then(p => {
+    p
       ? res.json(p)
       : res.status(404).end()
-    })
+  })
     .catch(error => next(error))
 })
 
 app.delete('/api/persons/:id', (req, res, next) => {
-    Person.findByIdAndDelete(req.params.id).then(p => {
-      res.status(204).end()
-    })
+  Person.findByIdAndDelete(req.params.id).then(() => {
+    res.status(204).end()
+  })
     .catch(error => next(error))
 })
 
 app.post('/api/persons', (req, res, next) => {
-    const person = req.body
+  const person = req.body
 
-    /* if (persons.find(p => p.name === person.name)) {
+  /* if (persons.find(p => p.name === person.name)) {
         return res.status(400).json({
             error: 'name already in phonebook'
         })
     } */
 
-    const person_db = new Person({
-      name: person.name,
-      number: person.number,
-    })
+  const person_db = new Person({
+    name: person.name,
+    number: person.number,
+  })
 
-    person_db.save().then(savedPerson => {
-      console.log(`added ${person.name} number ${person.number} to phonebook`)
-      res.json(savedPerson)
-    }).catch(error => next(error))
+  person_db.save().then(savedPerson => {
+    console.log(`added ${person.name} number ${person.number} to phonebook`)
+    res.json(savedPerson)
+  }).catch(error => next(error))
 })
 
 app.put('/api/persons/:id', (req, res, next) => {

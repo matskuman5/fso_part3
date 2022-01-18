@@ -5,38 +5,38 @@ const password = process.argv[2]
 const url =
   `mongodb+srv://fullstackopen:${password}@cluster0.gkc9j.mongodb.net/phonebook?retryWrites=true&w=majority`
 
-if (process.argv.length == 4 || process.argv.length > 5) {
-    console.log('error: wrong amount of arguments')
-    return
+if (process.argv.length === 4 || process.argv.length > 5) {
+  console.log('error: wrong amount of arguments')
+  return
 }
 
 mongoose.connect(url)
 
 const personSchema = new mongoose.Schema({
-    name: String,
-    number: String,
+  name: String,
+  number: String,
 })
 
 const Person = mongoose.model('Person', personSchema)
 
-if (process.argv.length == 3) {
-    Person.find({}).then(res => {
-        res.forEach(p => {
-            console.log(p)
-        })
-        mongoose.connection.close()
+if (process.argv.length === 3) {
+  Person.find({}).then(res => {
+    res.forEach(p => {
+      console.log(p)
     })
-    return
+    mongoose.connection.close()
+  })
+  return
 }
 
 const person = new Person({
-    name: process.argv[3],
-    number: process.argv[4],
+  name: process.argv[3],
+  number: process.argv[4],
 })
 
-person.save().then(res => {
-    console.log(`added ${process.argv[3]} number ${process.argv[4]} to phonebook`)
-    mongoose.connection.close()
+person.save().then(() => {
+  console.log(`added ${process.argv[3]} number ${process.argv[4]} to phonebook`)
+  mongoose.connection.close()
 })
 
 
